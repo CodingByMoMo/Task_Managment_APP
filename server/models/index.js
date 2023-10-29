@@ -11,15 +11,19 @@ const mongoose = require('mongoose');
  * @async
  */
 async function connectToDatabase() {
+	const mongoURI = process.env.DB_URI;
 	try {
-		await mongoose.connect(
-			'mongodb+srv://bartek:eU2kUinWQNztArlQ@tasks.2hqyuqo.mongodb.net/?retryWrites=true&w=majority'
-		);
+		await mongoose.connect(mongoURI);
 	} catch (error) {
 		console.log(error);
 	}
 }
 
+function setDatabaseToStrict() {
+	mongoose.set('strictQuery', false);
+}
+
 module.exports = {
 	connectToDatabase,
+	setDatabaseToStrict,
 };
